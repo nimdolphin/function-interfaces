@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Document</title>
+    <script src="./index.js" type="module"></script>
+  </head>
+  <body>
+    <h1 class="title">Function Interfaces</h1>
+    <p class="text">
+      You can use these inputs to check the following functions:
+    </p>
+    <form id="interfaces">
+      <div>
+        <h2 class="func__title">DNA to RNA Conversion:</h2>
+        <p class="text">
+          Enter a DNA sequence to convert it into an RNA sequence. <br />
+          Only A, C, G, and T are allowed. For example, "GATTACA" converts to
+          "CAUUUGU".
+        </p>
+        <input
+          class="input__article"
+          type="text"
+          placeholder="Enter DNA sequence (A, C, G, T)"
+          id="convecterInput"
+        />
+        <button class="btn" id="convecterButton" type="button">Generate</button>
+        <p class="answer" id="convecterResult"></p>
+      </div>
+
+      <div>
+        <h2 class="func__title">Palindrome Check:</h2>
+        <p class="text">
+          Enter a string or number to check if it is a palindrome. <br />For
+          example, entering "radar" or "404" will confirm that they are
+          palindromes.
+        </p>
+        <input
+          class="input__article"
+          type="text"
+          placeholder="Enter a string or number"
+          id="palindromeInput"
+        />
+        <button id="palindromeButton" type="button">Check</button>
+        <p class="answer" id="palindromeResult"></p>
+      </div>
+
+      <div>
+        <h2 class="func__title">Substring Extraction:</h2>
+        <p class="text">
+          Enter a string, start position, and length to extract a substring.
+          <br />For example, for "JavaScript programming" with a start position
+          of 0 and a length of 10, the result is "JavaScript".
+        </p>
+        <div class="substr">
+          <input
+            class="input__article"
+            type="text"
+            placeholder="Enter the string"
+            id="stringInput"
+          />
+          <input
+            class="input__article"
+            type="text"
+            placeholder="Enter start index"
+            id="indexInput"
+          />
+          <input
+            class="input__article"
+            type="text"
+            placeholder="Enter substring length"
+            id="lengthInput"
+          />
+          <button id="substrButton" type="button">Check</button>
+        </div>
+
+        <p class="answer" id="substrResult"></p>
+      </div>
+    </form>
+  </body>
+</html>
