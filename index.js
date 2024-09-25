@@ -1,6 +1,7 @@
 import substr from './substr.js';
 import convertDnaToRna from './dna-to-rna-converter.js';
 import isPalindrome from './palindrome.js';
+import { toggleClass } from './classManager.js';
 
 const inputConvecter = document.getElementById('convecterInput');
 const buttonConvecter = document.getElementById('convecterButton');
@@ -8,23 +9,14 @@ const resultConvecter = document.getElementById('convecterResult');
 
 buttonConvecter.addEventListener('click', () => {
   const inputValue = inputConvecter.value.trim().toUpperCase();
-  resultConvecter.classList.remove('error');
-  inputConvecter.classList.remove('error');
 
-  if (!/^[ACGT]*$/.test(inputValue)) {
-    resultConvecter.textContent =
-      'Invalid DNA sequence. Only A, C, G, and T are allowed.';
-    resultConvecter.classList.add('error');
-    inputConvecter.classList.add('error');
-  } else if (inputValue === '') {
-    resultConvecter.textContent = 'Field is required!';
-    resultConvecter.classList.add('error');
-    inputConvecter.classList.add('error');
-  } else {
-    const convecter = convertDnaToRna(inputValue);
-
-    resultConvecter.textContent = `RNA: ${convecter}`;
-    inputConvecter.classList.remove('error');
+  try {
+    resultConvecter.textContent = convertDnaToRna(inputValue);
+    toggleClass(resultConvecter, 'error', false);
+  } catch (error) {
+    resultConvecter.textContent = error.message;
+    toggleClass(resultConvecter, 'error', true);
+    toggleClass(inputConvecter, 'error', true);
   }
 });
 
@@ -34,20 +26,14 @@ const resultPalindrome = document.getElementById('palindromeResult');
 
 buttonPalindrome.addEventListener('click', () => {
   const inputValue = inputPalindrome.value;
-  const isPalin = isPalindrome(inputValue);
 
-  resultPalindrome.classList.remove('error');
-  inputPalindrome.classList.remove('error');
-
-  if (inputValue === '') {
-    resultPalindrome.textContent = 'Field is required!';
-    resultPalindrome.classList.add('error');
-    inputPalindrome.classList.add('error');
-  } else {
-    resultPalindrome.textContent = isPalin
-      ? 'It is a palindrome!'
-      : 'It is not a palindrome!';
-    inputPalindrome.classList.remove('error');
+  try {
+    resultPalindrome.textContent = isPalindrome(inputValue);
+    toggleClass(resultPalindrome, 'error', false);
+  } catch (error) {
+    resultPalindrome.textContent = error.message;
+    toggleClass(resultPalindrome, 'error', true);
+    toggleClass(inputPalindrome, 'error', true);
   }
 });
 
@@ -62,49 +48,37 @@ buttonString.addEventListener('click', () => {
   const startValue = inputStart.value.trim();
   const lengthValue = inputLength.value.trim();
 
-  resultString.classList.remove('error');
-  inputString.classList.remove('error');
-  inputStart.classList.remove('error');
-  inputLength.classList.remove('error');
-
-  if (!strValue || !startValue || !lengthValue) {
-    resultString.textContent = 'All fields must be filled in!';
-    resultString.classList.add('error');
-    inputString.classList.add('error');
-    inputStart.classList.add('error');
-    inputLength.classList.add('error');
-    return;
-  }
-
   const startNum = parseInt(startValue);
   const lengthNum = parseInt(lengthValue);
 
-  if (isNaN(startNum) || isNaN(lengthNum)) {
-    resultString.textContent = 'Error: Start index and length must be numbers!';
-    resultString.classList.add('error');
-    inputStart.classList.add('error');
-    inputLength.classList.add('error');
-    return;
+  try {
+    resultString.textContent = substr(strValue, startNum, lengthNum);
+    toggleClass(resultString, 'error', false);
+    toggleClass(inputString, 'error', false);
+    toggleClass(inputStart, 'error', false);
+    toggleClass(inputLength, 'error', false);
+  } catch (error) {
+    resultString.textContent = error.message;
+
+    if (error.message.includes('All fields must be filled in!')) {
+      toggleClass(inputString, 'error', true);
+      toggleClass(inputStart, 'error', true);
+      toggleClass(inputLength, 'error', true);
+
+      toggleClass(resultString, 'error', true);
+    } else {
+      toggleClass(resultString, 'error', false);
+
+      toggleClass(inputString, 'error', false);
+      toggleClass(inputStart, 'error', false);
+      toggleClass(inputLength, 'error', false);
+    }
+
+    if (error.message.includes('Start index and length must be numbers!')) {
+      toggleClass(inputStart, 'error', true);
+      toggleClass(inputLength, 'error', true);
+
+      toggleClass(resultString, 'error', true);
+    }
   }
-
-  const result = substr(strValue, startNum, lengthNum);
-  resultString.textContent = result;
-});
-
-inputConvecter.addEventListener('input', () => {
-  inputConvecter.classList.remove('error');
-});
-
-inputPalindrome.addEventListener('input', () => {
-  inputPalindrome.classList.remove('error');
-});
-
-inputString.addEventListener('input', () => {
-  inputString.classList.remove('error');
-});
-inputStart.addEventListener('input', () => {
-  inputStart.classList.remove('error');
-});
-inputLength.addEventListener('input', () => {
-  inputLength.classList.remove('error');
 });

@@ -3,6 +3,10 @@ function convertDnaToRna(dnaSequence) {
     throw new Error('Invalid DNA sequence. Only A, C, G, and T are allowed.');
   }
 
+  if (dnaSequence === '') {
+    throw new Error('Field is required!');
+  }
+
   const result = dnaSequence
     .replace(/G/g, 'X')
     .replace(/C/g, 'G')

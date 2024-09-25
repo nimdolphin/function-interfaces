@@ -1,4 +1,8 @@
 const isPalindrome = (value) => {
+  if (value === '') {
+    throw new Error('Field is required!');
+  }
+
   const str = String(value).replace(/\s+/g, '').toLowerCase();
 
   if (str.length <= 1) {

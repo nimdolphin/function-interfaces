@@ -1,4 +1,12 @@
 const substr = (str, start = 0, length = str.length) => {
+  if (!str || start === '' || length === '') {
+    throw new Error('All fields must be filled in!');
+  }
+
+  if (isNaN(start) || isNaN(length)) {
+    throw new Error('Start index and length must be numbers!');
+  }
+
   const strLength = str.length;
 
   if (start < 0) {
